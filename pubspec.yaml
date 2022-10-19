@@ -37,6 +37,9 @@ dependencies:
 
 dev_dependencies:
   freezed: ^2.1.1
+  bloc: ^8.1.0
+  http: ^0.13.5
+  
   flutter_test:
     sdk: flutter
 
