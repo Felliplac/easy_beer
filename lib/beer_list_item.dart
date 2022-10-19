@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
-/*class MyWidget extends StatefulWidget {
-  const MyWidget({Key? key}) : super(key: key);
+class Beer extends StatelessWidget {
+  const Beer({Key? key}) : super(key: key);
 
   @override
-  State<MyWidget> createState() => _MyWidgetState();
+  Widget build(BuildContext context) => Column(
+    children: <Widget>[
+       ListTile(
+        title: const Text("nome"),
+        subtitle: const Text("tagline"),
+        leading: Image.network("https://images.punkapi.com/v2/192.png",height: 50.0, fit: BoxFit.fill,),
+      ),
+       const Divider()
+    ]
+  );
 }
-
-class _MyWidgetState extends State<MyWidget> {
-  @override
-  Widget build(BuildContext context) {
-    
-  }
-}*/
