@@ -33,7 +33,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<BeerApi> list = List.empty();
-  
+
   @override
   void initState() {
     super.initState();
@@ -43,24 +43,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<List> fetch() async {
     const url = 'https://api.punkapi.com/v2/beers?page=2&per_page=80';
     final response = await http.get(Uri.parse(url));
-    var json = (jsonDecode(response.body) as List) 
+    var json = (jsonDecode(response.body) as List)
         .map((data) => BeerApi.fromJson(data))
         .toList();
 
     list = json;
 
     return json;
-
-    //if (response.statusCode == 200) {
-    //var mari = BeerApi.fromJson(jsonDecode(response.body));
-    /*list.add(mari);
-      print(list);
-      return mari;
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');*/
-    //  }
   }
 
   @override
@@ -83,11 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         borderRadius:
                             BorderRadius.all(Radius.circular(56.0))))),
           ),
-          Padding(padding: EdgeInsets.all(32.0)),
-          Text(
-            'Nenhuma cerveja encontrada',
-            style: TextStyle(fontSize: 24),
-          ),
+          Padding(padding: EdgeInsets.all(16.0)),
         ],
       ),
     );
@@ -107,7 +92,15 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(onPressed: null, icon: Icon(Icons.autorenew_outlined))
           ],
         ),
-        body: Column(
-            children: <Widget>[buildSearch(), Expanded(child: buildList())]));
+        body: Column(children: <Widget>[
+          buildSearch(),
+          if (list.isEmpty)
+            const Text(
+              'Nenhuma cerveja encontrada',
+              style: TextStyle(fontSize: 24),
+            )
+          else
+            Expanded(child: buildList())
+        ]));
   }
 }

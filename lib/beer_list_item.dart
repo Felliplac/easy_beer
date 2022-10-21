@@ -8,7 +8,7 @@ class Beer extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Column(
     children: <Widget>[
-       ListTile(
+        ListTile(
         title:  Text(_beerApi.name),
         subtitle: Text(_beerApi.tagline),
         leading: Image.network(_beerApi.image_url,height: 50.0, fit: BoxFit.fill,),
