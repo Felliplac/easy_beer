@@ -1,5 +1,6 @@
 import 'package:easy_beer/beer_list_item.dart';
 import 'package:easy_beer/freezed_classes.dart';
+import 'package:easy_beer/tela_item.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -33,11 +34,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<BeerApi> list = List.empty();
+  List<BeerApi> randomBeer = List.empty();
 
   @override
   void initState() {
     super.initState();
     fetch();
+    getRandomBeer();
   }
 
   Future<List> fetch() async {
@@ -84,12 +87,30 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: ((context, index) => Beer(list[index])));
   }
 
+  Future<List> getRandomBeer() async {
+    const url = 'https://api.punkapi.com/v2/beers/random';
+    final response = await http.get(Uri.parse(url));
+    var json =
+        (jsonDecode(response.body) as List)
+        .map((data) => BeerApi.fromJson(data))
+        .toList();
+
+    randomBeer = json;
+    return json;
+  }
+
   Widget buildScreen() {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          actions: const [
-            IconButton(onPressed: null, icon: Icon(Icons.autorenew_outlined))
+          actions: [
+            IconButton(
+                onPressed: () {
+                  getRandomBeer();
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => TelaItem(randomBeer.first)));
+                },
+                icon: const Icon(Icons.autorenew_outlined))
           ],
         ),
         body: Column(children: <Widget>[
